@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@types/react@*":
+  version "15.0.23"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.23.tgz#f3facbef5290610f54242f00308759d3a3c27346"
+
 JSONStream@^0.8.4:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-0.8.4.tgz#91657dfe6ff857483066132b4618b62e8f4887bd"
@@ -5521,6 +5525,12 @@ react-dom@^15.5.4:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "~15.5.7"
+
+react-google-login@^2.8.9:
+  version "2.8.9"
+  resolved "https://registry.yarnpkg.com/react-google-login/-/react-google-login-2.8.9.tgz#4bbdab2ef781d74c10ee5d2918f55c8026e2aa5e"
+  dependencies:
+    "@types/react" "*"
 
 react-hot-loader@^3.0.0-beta.6:
   version "3.0.0-beta.6"

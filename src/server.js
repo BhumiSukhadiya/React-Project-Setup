@@ -58,10 +58,10 @@ if (__DEV__) {
   app.enable('trust proxy');
 }
 app.get('/login/facebook',
-  passport.authenticate('facebook', { scope: ['email', 'user_location'], session: false }),
+  passport.authenticate('facebook', { scope: ['email', 'user_location'], session: true }),
 );
 app.get('/login/facebook/return',
-  passport.authenticate('facebook', { failureRedirect: '/login', session: false }),
+  passport.authenticate('facebook', { failureRedirect: '/login', session: true }),
   (req, res) => {
     const expiresIn = 60 * 60 * 24 * 180; // 180 days
     const token = jwt.sign(req.user, auth.jwt.secret, { expiresIn });

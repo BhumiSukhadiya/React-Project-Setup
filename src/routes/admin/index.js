@@ -41,6 +41,15 @@ export default {
         component: <Layout><NewRoute title={title} /></Layout>,
       };
     },
+  },{
+    path: '/users/:username',
+    action({params}) {
+      console.log(params.username)
+      return {
+        title: 'admin/users page',
+        component: <Layout><NewRoute title={title} username={params.username}/></Layout>,
+      };
+    },
   }]
 
 };
