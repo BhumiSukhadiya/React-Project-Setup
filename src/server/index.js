@@ -16,15 +16,13 @@ import jwt from 'jsonwebtoken';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
-import App from './components/App';
-import Html from './components/Html';
-import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
-import errorPageStyle from './routes/error/ErrorPage.css';
-import passport from './core/passport';
-import router from './core/router';
+import App from '../client/components/App';
+import Html from '../client/components/Html';
+import { ErrorPageWithoutStyle } from '../client/pages/error/ErrorPage';
+import errorPageStyle from '../client/pages/error/ErrorPage.css';
+import router from '../client/core/router';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
-import configureStore from './store/configureStore';
-import { setRuntimeVariable } from './actions/runtime';
+import configureStore from '../client/store/configureStore';
 import { port, auth } from './config';
 
 const app = express();
@@ -52,23 +50,11 @@ app.use(expressJwt({
   credentialsRequired: false,
   getToken: req => req.cookies.id_token,
 }));
-app.use(passport.initialize());
+
 
 if (__DEV__) {
   app.enable('trust proxy');
 }
-app.get('/login/facebook',
-  passport.authenticate('facebook', { scope: ['email', 'user_location'], session: true }),
-);
-app.get('/login/facebook/return',
-  passport.authenticate('facebook', { failureRedirect: '/login', session: true }),
-  (req, res) => {
-    const expiresIn = 60 * 60 * 24 * 180; // 180 days
-    const token = jwt.sign(req.user, auth.jwt.secret, { expiresIn });
-    res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
-    res.redirect('/');
-  },
-);
 
 //
 // Register API middleware
@@ -82,17 +68,7 @@ app.use('/homedata',(req,res)=>{
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
   try {
-    const store = configureStore({
-      user: req.user || null,
-    }, {
-      cookie: req.headers.cookie,
-    });
-
-    store.dispatch(setRuntimeVariable({
-      name: 'initialNow',
-      value: Date.now(),
-    }));
-
+    const store = configureStore();
     const css = new Set();
 
     // Global (context) variables that can be easily accessed from any React component

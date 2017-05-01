@@ -55,14 +55,14 @@ to bundle them into client-side and server-side application bundles -
 ```js
 module.exports = [{
   context: __dirname + '/src'
-  entry: './client.js',
+  entry: index.js,
   output: {
     path: __dirname + '/build/public',
     filename: 'client.js'
   }
 }, {
   context: __dirname + '/src',
-  entry: './server.js',
+  entry: index.js,
   output: {
     path: __dirname + '/build',
     filename: 'server.js',
